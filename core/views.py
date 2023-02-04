@@ -4,12 +4,12 @@ from .models import Unit, Question, Answer
 from rest_framework import viewsets
 from .serializers import QuestionSerializer, UnitSerializer, AnswerSerializer
 
-class QuestionViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows Units to be viewed or edited.
-    """
-    queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
+# class QuestionViewSet(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows Units to be viewed or edited.
+#     """
+#     queryset = Question.objects.all()
+#     serializer_class = QuestionSerializer
 
 class UnitViewSet(viewsets.ModelViewSet):
     """
