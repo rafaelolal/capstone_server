@@ -20,5 +20,3 @@ class UnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Unit
         fields = ['key']
-
-# hello!
