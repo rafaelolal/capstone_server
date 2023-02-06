@@ -15,8 +15,8 @@ class Question(models.Model):
 
 class Answer(models.Model):
   # renaming to unit and question makes these fields disappear from the API
-  unit_id = models.ForeignKey(Unit, verbose_name=("unit"), on_delete=models.CASCADE)
-  question_id = models.ForeignKey(Question, verbose_name=("question"), on_delete=models.CASCADE)
+  unit_id = models.ForeignKey(Unit, related_name="answers", on_delete=models.CASCADE)
+  question_id = models.ForeignKey(Question, related_name="answers", on_delete=models.CASCADE)
   
   content = TextField(max_length=16384)
   time_spent = IntegerField()

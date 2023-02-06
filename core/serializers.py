@@ -11,12 +11,19 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = ['title', 'description']
 
+class QuestionPKSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ['pk']
+
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
         fields = ['unit_id', 'question_id', 'content', 'time_spent']
 
 class UnitSerializer(serializers.ModelSerializer):
+    answers = QuestionPKSerializer(many=True, read_only=True)
+    
     class Meta:
         model = Unit
-        fields = ['key']
+        fields = ['key', 'answers']
