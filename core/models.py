@@ -6,18 +6,17 @@ class Unit(models.Model):
 
 class Question(models.Model):
   title = CharField(max_length=256)
-  description = TextField(max_length=5096)
+  description = TextField(max_length=16384)
   open_at = DateField(auto_now=False, auto_now_add=False)
   due_at = DateField(auto_now=False, auto_now_add=False)
 
   types = ['Pretest', 'Normal', 'Posttest']
-  tuple_types = [(c, c) for c in types]
-  type = CharField(max_length=64, choices=tuple_types)
+  type = CharField(max_length=64, choices=[(c, c) for c in types])
 
 class Answer(models.Model):
   # renaming to unit and question makes these fields disappear from the API
   unit_id = models.ForeignKey(Unit, verbose_name=("unit"), on_delete=models.CASCADE)
   question_id = models.ForeignKey(Question, verbose_name=("question"), on_delete=models.CASCADE)
   
-  response = TextField(max_length=5096)
+  content = TextField(max_length=16384)
   time_spent = IntegerField()
