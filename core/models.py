@@ -16,8 +16,8 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-  unit_id = models.ForeignKey(Unit, verbose_name=("unit"), on_delete=models.CASCADE)
-  question_id = models.ForeignKey(Question, verbose_name=("question"), on_delete=models.CASCADE)
+  unit = models.ForeignKey(Unit, verbose_name=("unit"), on_delete=models.CASCADE)
+  question = models.ForeignKey(Question, verbose_name=("question"), on_delete=models.CASCADE)
   
   response = TextField(max_length=5096)
-  time_spent = TimeField(auto_now=False, auto_now_add=False)
+  time_spent = IntegerField()
