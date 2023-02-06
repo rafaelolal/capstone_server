@@ -14,10 +14,10 @@ class Question(models.Model):
   tuple_types = [(c, c) for c in types]
   type = CharField(max_length=64, choices=tuple_types)
 
-
 class Answer(models.Model):
-  unit = models.ForeignKey(Unit, verbose_name=("unit"), on_delete=models.CASCADE)
-  question = models.ForeignKey(Question, verbose_name=("question"), on_delete=models.CASCADE)
+  # renaming to unit and question makes these fields disappear from the API
+  unit_id = models.ForeignKey(Unit, verbose_name=("unit"), on_delete=models.CASCADE)
+  question_id = models.ForeignKey(Question, verbose_name=("question"), on_delete=models.CASCADE)
   
   response = TextField(max_length=5096)
   time_spent = IntegerField()
