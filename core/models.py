@@ -14,9 +14,8 @@ class Question(models.Model):
   type = CharField(max_length=64, choices=[(c, c) for c in types])
 
 class Answer(models.Model):
-  # renaming to unit and question makes these fields disappear from the API
-  unit_id = models.ForeignKey(Unit, related_name="answers", on_delete=models.CASCADE)
-  question_id = models.ForeignKey(Question, related_name="answers", on_delete=models.CASCADE)
+  unit = models.ForeignKey(Unit, related_name="answers", on_delete=models.CASCADE)
+  question = models.ForeignKey(Question, related_name="answers", on_delete=models.CASCADE)
   
   content = TextField(max_length=16384)
   time_spent = IntegerField()
