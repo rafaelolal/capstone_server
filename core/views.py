@@ -1,5 +1,4 @@
 from rest_framework.generics import RetrieveAPIView, ListAPIView, CreateAPIView
-from rest_framework.permissions import IsAuthenticated
 from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, AnswerSerializer
 from .models import Unit, Question, Answer
 
@@ -9,7 +8,6 @@ class QuestionListView(ListAPIView):
     """
     queryset = Question.objects.all()
     serializer_class = QuestionListSerializer
-    permission_classes = (IsAuthenticated,)
 
 class QuestionRetrieveView(RetrieveAPIView):
     """
@@ -17,7 +15,6 @@ class QuestionRetrieveView(RetrieveAPIView):
     """
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
-    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         if self.kwargs['control']:
@@ -30,7 +27,6 @@ class UnitRetrieveView(RetrieveAPIView):
     """
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
-    permission_classes = (IsAuthenticated,)
 
 class AnswerCreateView(CreateAPIView):
     """
@@ -38,4 +34,3 @@ class AnswerCreateView(CreateAPIView):
     """
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
-    permission_classes = (IsAuthenticated,)
