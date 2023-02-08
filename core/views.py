@@ -8,6 +8,11 @@ class QuestionListView(ListAPIView):
     """
     queryset = Question.objects.all()
     serializer_class = QuestionListSerializer
+    
+    def get_queryset(self):
+        if 'control' in self.kwargs:
+            return Question.objects.exclude(type='Normal')
+        return Question.objects.all()
 
 class QuestionRetrieveView(RetrieveAPIView):
     """
@@ -15,11 +20,6 @@ class QuestionRetrieveView(RetrieveAPIView):
     """
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
-
-    def get_queryset(self):
-        if self.kwargs['control']:
-            return Question.objects.exclude(type='Normal')
-        return Question.objects.all()
 
 class UnitRetrieveView(RetrieveAPIView):
     """
