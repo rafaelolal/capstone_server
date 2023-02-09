@@ -9,7 +9,7 @@ class QuestionListSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['title', 'description']
+        fields = ['title', 'description', 'type']
 
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
