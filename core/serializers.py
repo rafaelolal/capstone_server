@@ -1,13 +1,6 @@
 from rest_framework import serializers
 from .models import Unit, Question, Answer
 
-class UnitSerializer(serializers.ModelSerializer):
-    answers = AnswerQuestionPKSerializer(many=True, read_only=True)
-    
-    class Meta:
-        model = Unit
-        fields = ['key', 'answers']
-
 class QuestionListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
@@ -27,6 +20,13 @@ class AnswerQuestionPKSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
         fields = ['question']
+
+class UnitSerializer(serializers.ModelSerializer):
+    answers = AnswerQuestionPKSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Unit
+        fields = ['key', 'answers']
 
 class PeerReviewSerializer(serializers.ModelSerializer):
     class Meta:

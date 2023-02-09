@@ -22,6 +22,6 @@ urlpatterns = [
     path('question-list/', views.QuestionListView.as_view(), name="question_list"),
     path('question/<int:pk>/', views.QuestionRetrieveView.as_view(), name="question_retrieve"),
     path('answer/', views.AnswerCreateView.as_view(), name="answer_create"),
-    path('answer/', views.PeerReviewCreateView.as_view(), name="peer_review_create"),
+    path('peer-review/', views.PeerReviewCreateView.as_view(), name="peer_review_create"),
     path('admin/', admin.site.urls),
 ]
