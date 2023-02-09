@@ -4,33 +4,34 @@ from .models import Unit, Question, Answer
 
 class QuestionListView(ListAPIView):
     """
-    API endpoint that allows Questions to be retrieved.
+    Retrieves all Questions or all non-experiment questions
     """
     queryset = Question.objects.all()
     serializer_class = QuestionListSerializer
     
     def get_queryset(self):
+        queryset = Question.objects.all().order_by('open_at')
         if 'control' in self.kwargs:
-            return Question.objects.exclude(type='Normal')
-        return Question.objects.all()
+            return queryset.exclude(type='Experiment')
+        return queryset
 
 class QuestionRetrieveView(RetrieveAPIView):
     """
-    API endpoint that allows a Question to be retrieved.
+    Retrieves a Question given a primary key.
     """
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
 class UnitRetrieveView(RetrieveAPIView):
     """
-    API endpoint that allows a Unit to be retrieved.
+    Retrieves a Unit given a key.
     """
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
 
 class AnswerCreateView(CreateAPIView):
     """
-    API endpoint that allows an Answer to be created.
+    Creates an Answer.
     """
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
