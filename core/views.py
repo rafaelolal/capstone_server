@@ -10,7 +10,7 @@ class QuestionListView(ListAPIView):
     serializer_class = QuestionListSerializer
     
     def get_queryset(self):
-        queryset = Question.objects.all().order_by('open_at')
+        queryset = Question.objects.all().order_by('opens_on')
         if 'control' in self.kwargs:
             return queryset.exclude(type='Experiment')
         return queryset
