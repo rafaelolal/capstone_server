@@ -4,7 +4,7 @@ from .models import Unit, Question, Answer
 class QuestionListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['pk', 'title', 'open_at', 'due_at', 'type']
+        fields = ['pk', 'title', 'opens_on', 'due_on', 'type']
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
