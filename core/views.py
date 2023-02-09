@@ -1,6 +1,6 @@
 from rest_framework.generics import RetrieveAPIView, ListAPIView, CreateAPIView
-from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, AnswerSerializer
-from .models import Unit, Question, Answer
+from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, AnswerSerializer, PeerReviewSerializer
+from .models import Unit, Question, Answer, PeerReivew
 
 class QuestionListView(ListAPIView):
     """
@@ -35,3 +35,10 @@ class AnswerCreateView(CreateAPIView):
     """
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
+
+class PeerReviewCreateView(CreateAPIView):
+    """
+    Creates a PeerReivew.
+    """
+    queryset = PeerReivew.objects.all()
+    serializer_class = PeerReviewSerializer
