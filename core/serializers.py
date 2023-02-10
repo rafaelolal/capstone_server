@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Unit, Question, Answer
+from .models import Unit, Question, Answer, PeerReview
 
 class QuestionListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,5 +30,5 @@ class UnitSerializer(serializers.ModelSerializer):
 
 class PeerReviewSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Answer
+        model = PeerReview
         fields = ['unit', 'content', 'submitted_on']
