@@ -17,14 +17,14 @@ class Question(models.Model):
   type = CharField(max_length=64, choices=[(c, c) for c in types])
 
   def __str__(self):
-    return f'Question {self.title} opens {self.open_at} due {self.due_at}'
+    return f'Question {self.title} opens {self.opens_on} due {self.due_on}'
 
 class Answer(models.Model):
   unit = models.ForeignKey(Unit, related_name="answers", on_delete=models.CASCADE)
   question = models.ForeignKey(Question, related_name="answers", on_delete=models.CASCADE)
   
   content = TextField(max_length=16384)
-  time_spent = IntegerField(blank=True)
+  time_spent = IntegerField(null=True)
 
   def __str__(self):
     return f'By {self.unit} on {self.question.title}'
