@@ -17,7 +17,7 @@ class Question(models.Model):
   type = CharField(max_length=64, choices=[(c, c) for c in types])
 
   def __str__(self):
-    return f'Question {self.title} opens {self.opens_on} due {self.due_on}'
+    return f'Question "{self.title}" opens {self.opens_on} due {self.due_on}'
 
 class Answer(models.Model):
   unit = models.ForeignKey(Unit, related_name="answers", on_delete=models.CASCADE)
@@ -27,10 +27,13 @@ class Answer(models.Model):
   time_spent = IntegerField(null=True)
 
   def __str__(self):
-    return f'By {self.unit} on {self.question.title}'
+    return f'By {self.unit} on "{self.question.title}"'
 
 class PeerReview(models.Model):
   unit = models.ForeignKey(Unit, related_name="peer_reviews", on_delete=models.CASCADE)
   
-  content = CharField(max_length=16384)
+  content = TextField(max_length=16384)
   submitted_on = DateField(auto_now=False, auto_now_add=False)
+
+  def __str__(self):
+    return f'By {self.unit} on {self.submitted_on}'
