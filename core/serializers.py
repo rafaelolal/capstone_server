@@ -4,7 +4,7 @@ from .models import Unit, Question, Answer, PeerReview
 class QuestionListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['pk', 'title', 'opens_on', 'due_on', 'type']
+        fields = ['pk', 'title', 'opens_on', 'due_on', 'type', 'pre_requisite']
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,7 +31,7 @@ class UnitSerializer(serializers.ModelSerializer):
 class UnitSignedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Unit
-        fields = ['signed']
+        fields = []
 
     def update(self, instance, validated_data):
         instance.signed = True
