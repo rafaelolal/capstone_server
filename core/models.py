@@ -1,11 +1,21 @@
 from django.db import models
-from django.db.models.fields import CharField, TextField, DateField, IntegerField, TimeField
+from shortuuidfield import ShortUUIDField
+from django.db.models.fields import  IntegerField, BooleanField, CharField, TextField, DateField
+
+class Classroom(models.Model):
+  periods = ['A-3/4', 'A-7/8', 'B-3/4', 'B-7/8']
+  period = CharField(max_length=6, choices=[(c, c) for c in periods], unique=True)
 
 class Unit(models.Model):
-  key = IntegerField(primary_key=True)
+  key = ShortUUIDField(max_length=4, primary_key=True)
+  signed = BooleanField(null=True)
+  classroom = models.ForeignKey(Classroom, related_name="units", on_delete=models.CASCADE)
+
+  types = ['Experimental', 'Control']
+  type = CharField(max_length=12, choices=[(c, c) for c in types])
 
   def __str__(self):
-    return f'Unit {self.key}'
+    return f'{self.type} {self.key}'
 
 class Question(models.Model):
   title = CharField(max_length=256)
@@ -14,10 +24,10 @@ class Question(models.Model):
   due_on = DateField(auto_now=False, auto_now_add=False)
 
   types = ['Test', 'Experiment']
-  type = CharField(max_length=64, choices=[(c, c) for c in types])
+  type = CharField(max_length=10, choices=[(c, c) for c in types])
 
   def __str__(self):
-    return f'Question "{self.title}" opens {self.opens_on} due {self.due_on}'
+    return f'"{self.title}" opens {self.opens_on} due {self.due_on}'
 
 class Answer(models.Model):
   unit = models.ForeignKey(Unit, related_name="answers", on_delete=models.CASCADE)
