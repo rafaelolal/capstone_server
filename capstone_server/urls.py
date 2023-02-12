@@ -19,7 +19,7 @@ from core import views
 
 urlpatterns = [
     path('unit/<int:pk>/', views.UnitRetrieveView.as_view(), name="unit_retrieve"),
-    path('unit-signed/<int:key>/', views.UnitSignedView.as_view(), name="unit_signed"),
+    path('unit-signed/<int:pk>/', views.UnitSignedView.as_view(), name="unit_signed"),
     path('question-list/', views.QuestionListView.as_view(), name="question_list"),
     path('question/<int:pk>/', views.QuestionRetrieveView.as_view(), name="question_retrieve"),
     path('answer/', views.AnswerCreateView.as_view(), name="answer_create"),

@@ -10,7 +10,7 @@ class Classroom(models.Model):
     return f'{self.period}'
 
 class Unit(models.Model):
-  key = ShortUUIDField(length=4, alphabet="012345679", unique=True)
+  key = ShortUUIDField(length=4, alphabet="012345679", unique=True, primary_key=True)
   signed = BooleanField(null=True)
   classroom = models.ForeignKey(Classroom, related_name="units", on_delete=models.CASCADE, blank=True, null=True)
 

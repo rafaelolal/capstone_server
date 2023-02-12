@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ["ralmeida.dev", "127.0.0.1"]
 
 CORS_ALLOWED_ORIGINS = [
     "https://ralmeida.dev",
+    "http://localhost:3000",
 ]
 
 # Application definition

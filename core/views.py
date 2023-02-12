@@ -35,7 +35,6 @@ class UnitSignedView(UpdateAPIView):
     """
     queryset = Unit.objects.all()
     serializer_class = UnitSignedSerializer
-    lookup_field = 'key'
 
 class AnswerCreateView(CreateAPIView):
     """
