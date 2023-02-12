@@ -30,9 +30,11 @@ SECRET_KEY = "django-insecure-=b+#^b!^0uc0os5f2+2e*9^pksh^r-skq2acbj*yucg6@@ymbq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["https://ralmeida.dev", "localhost"]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://ralmeida.dev",
+]
 
 # Application definition
 
@@ -40,7 +42,6 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
     'corsheaders',
-    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,15 +49,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
