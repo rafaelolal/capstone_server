@@ -1,13 +1,16 @@
 from django.db import models
-from shortuuidfield import ShortUUIDField
+from shortuuid.django_fields import ShortUUIDField
 from django.db.models.fields import  IntegerField, BooleanField, CharField, TextField, DateField
 
 class Classroom(models.Model):
   periods = ['A-3/4', 'A-7/8', 'B-3/4', 'B-7/8']
   period = CharField(max_length=6, choices=[(c, c) for c in periods], unique=True)
 
+  def __str__(self):
+    return f'{sef.period}'
+
 class Unit(models.Model):
-  key = ShortUUIDField(max_length=4, primary_key=True)
+  key = ShortUUIDField(length=4, alphabet="012345679", unique=True)
   signed = BooleanField(null=True)
   classroom = models.ForeignKey(Classroom, related_name="units", on_delete=models.CASCADE)
 
@@ -22,6 +25,7 @@ class Question(models.Model):
   description = TextField(max_length=16384)
   opens_on = DateField(auto_now=False, auto_now_add=False)
   due_on = DateField(auto_now=False, auto_now_add=False)
+  pre_requisite = IntegerField()
 
   types = ['Test', 'Experiment']
   type = CharField(max_length=10, choices=[(c, c) for c in types])
