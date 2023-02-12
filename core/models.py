@@ -12,9 +12,9 @@ class Classroom(models.Model):
 class Unit(models.Model):
   key = ShortUUIDField(length=4, alphabet="012345679", unique=True)
   signed = BooleanField(null=True)
-  classroom = models.ForeignKey(Classroom, related_name="units", on_delete=models.CASCADE)
+  classroom = models.ForeignKey(Classroom, related_name="units", on_delete=models.CASCADE, blank=True, null=True)
 
-  types = ['Experimental', 'Control']
+  types = ['Experimental', 'Control', 'Test']
   type = CharField(max_length=12, choices=[(c, c) for c in types])
 
   def __str__(self):
