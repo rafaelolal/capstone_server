@@ -25,7 +25,7 @@ class Question(models.Model):
   description = TextField(max_length=16384)
   opens_on = DateField(auto_now=False, auto_now_add=False)
   due_on = DateField(auto_now=False, auto_now_add=False)
-  pre_requisite = IntegerField(blank=True)
+  pre_requisite = IntegerField(blank=True, null=True)
 
   types = ['Test', 'Experiment']
   type = CharField(max_length=10, choices=[(c, c) for c in types])
