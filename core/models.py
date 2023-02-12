@@ -7,7 +7,7 @@ class Classroom(models.Model):
   period = CharField(max_length=6, choices=[(c, c) for c in periods], unique=True)
 
   def __str__(self):
-    return f'{sef.period}'
+    return f'{self.period}'
 
 class Unit(models.Model):
   key = ShortUUIDField(length=4, alphabet="012345679", unique=True)
@@ -31,7 +31,7 @@ class Question(models.Model):
   type = CharField(max_length=10, choices=[(c, c) for c in types])
 
   def __str__(self):
-    return f'"{self.title}" opens {self.opens_on} due {self.due_on}'
+    return f'{self.pk} "{self.title}" opens {self.opens_on} due {self.due_on}'
 
 class Answer(models.Model):
   unit = models.ForeignKey(Unit, related_name="answers", on_delete=models.CASCADE)

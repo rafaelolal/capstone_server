@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-=b+#^b!^0uc0os5f2+2e*9^pksh^r-skq2acbj*yucg6@@ymbq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["https://ralmeida.dev", "localhost"]
+ALLOWED_HOSTS = ["ralmeida.dev", "127.0.0.1"]
 
 CORS_ALLOWED_ORIGINS = [
     "https://ralmeida.dev",
