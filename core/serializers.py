@@ -26,7 +26,17 @@ class UnitSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Unit
-        fields = ['key', 'answers']
+        fields = ['key', 'signed', 'answers']
+
+class UnitSignedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Unit
+        fields = ['signed']
+
+    def update(self, instance, validated_data):
+        instance.signed = True
+        instance.save()
+        return instance
 
 class PeerReviewSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,5 +1,5 @@
-from rest_framework.generics import RetrieveAPIView, ListAPIView, CreateAPIView
-from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, AnswerSerializer, PeerReviewSerializer
+from rest_framework.generics import RetrieveAPIView, ListAPIView, CreateAPIView, UpdateAPIView
+from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, UnitSignedSerializer, AnswerSerializer, PeerReviewSerializer
 from .models import Unit, Question, Answer, PeerReview
 
 class QuestionListView(ListAPIView):
@@ -28,6 +28,14 @@ class UnitRetrieveView(RetrieveAPIView):
     """
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
+
+class UnitSignedView(UpdateAPIView):
+    """
+    Updates a Unit's signed field to True.
+    """
+    queryset = Unit.objects.all()
+    serializer_class = UnitSignedSerializer
+    lookup_field = 'key'
 
 class AnswerCreateView(CreateAPIView):
     """
