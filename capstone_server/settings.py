@@ -31,6 +31,7 @@ SECRET_KEY = "django-insecure-=b+#^b!^0uc0os5f2+2e*9^pksh^r-skq2acbj*yucg6@@ymbq
 DEBUG = False
 
 ALLOWED_HOSTS = ["ralmeida.dev", "127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["https://ralmeida.dev", "http://localhost:3000"]
 
 CORS_ALLOWED_ORIGINS = [
     "https://ralmeida.dev",
