@@ -1,6 +1,22 @@
 from rest_framework import serializers
 from .models import Unit, Question, Answer, PeerReview
 
+class UnitAnswersListSerializer(serializers.ModelSerializer):
+    classroom = serializers.SerializerMethodField()
+    answers = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Unit
+        fields = ['key', 'classroom', 'answers']
+
+    def get_classroom(self, obj):
+        if (obj.classroom):
+            return obj.classroom.period
+        return None
+
+    def get_answers(self, obj):
+        return len(obj.answers.all())
+
 class QuestionListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
