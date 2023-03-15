@@ -20,12 +20,21 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
-    path('unit/<int:pk>/', csrf_exempt(views.UnitRetrieveView.as_view()), name="unit_retrieve"),
-    path('unit-answers/', csrf_exempt(views.UnitAnswerListView.as_view()), name="unit_answers"),
-    path('unit-signed/<int:pk>/', csrf_exempt(views.UnitSignedView.as_view()), name="unit_signed"),
-    path('question-list/', csrf_exempt(views.QuestionListView.as_view()), name="question_list"),
-    path('question/<int:pk>/', csrf_exempt(views.QuestionRetrieveView.as_view()), name="question_retrieve"),
-    path('answer/', csrf_exempt(views.AnswerCreateView.as_view()), name="answer_create"),
-    path('peer-review/', csrf_exempt(views.PeerReviewCreateView.as_view()), name="peer_review_create"),
+    path('unit/<int:pk>/', csrf_exempt(views.UnitRetrieveView.as_view()),
+         name="unit_retrieve"),
+    path('unit-answers/', csrf_exempt(views.UnitAnswerListView.as_view()),
+         name="unit_answers"),
+    path('unit-signed/<int:pk>/',
+         csrf_exempt(views.UnitSignedView.as_view()), name="unit_signed"),
+    path('question-list/', csrf_exempt(views.QuestionListView.as_view()),
+         name="question_list"),
+    path('question/<int:pk>/', csrf_exempt(views.QuestionRetrieveView.as_view()),
+         name="question_retrieve"),
+    path('feedback/<int:pk>/', csrf_exempt(views.FeedbackRetrieveView.as_view()),
+         name="feedback_retrieve"),
+    path('answer/', csrf_exempt(views.AnswerCreateView.as_view()),
+         name="answer_create"),
+    path('peer-review/', csrf_exempt(views.PeerReviewCreateView.as_view()),
+         name="peer_review_create"),
     path('admin/', admin.site.urls),
 ]

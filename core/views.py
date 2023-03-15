@@ -1,9 +1,10 @@
 from rest_framework.generics import RetrieveAPIView, ListAPIView, CreateAPIView, UpdateAPIView
-from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, UnitSignedSerializer, AnswerSerializer, PeerReviewSerializer, UnitAnswersListSerializer
-from .models import Unit, Question, Answer, PeerReview
+from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, UnitSignedSerializer, AnswerSerializer, PeerReviewSerializer, UnitAnswersListSerializer, FeedbackSerializer
+from .models import Unit, Question, Answer, PeerReview, Feedback
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .authentications import CsrfExemptSessionAuthentication
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class UnitAnswerListView(ListAPIView):
@@ -14,7 +15,8 @@ class UnitAnswerListView(ListAPIView):
 
     queryset = Unit.objects.all()
     serializer_class = UnitAnswersListSerializer
-    
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 class QuestionListView(ListAPIView):
     """
@@ -24,12 +26,13 @@ class QuestionListView(ListAPIView):
 
     queryset = Question.objects.all()
     serializer_class = QuestionListSerializer
-    
+
     def get_queryset(self):
         queryset = Question.objects.all().order_by('opens_on')
         if 'control' in self.kwargs:
             return queryset.exclude(type='Experiment')
         return queryset
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class QuestionRetrieveView(RetrieveAPIView):
@@ -40,6 +43,17 @@ class QuestionRetrieveView(RetrieveAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
+
+@method_decorator(csrf_exempt, name='dispatch')
+class FeedbackRetrieveView(RetrieveAPIView):
+    """
+    Retrieves a Feedback given a primary key.
+    """
+    authentication_classes = (CsrfExemptSessionAuthentication, )
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 class UnitRetrieveView(RetrieveAPIView):
     """
@@ -48,6 +62,7 @@ class UnitRetrieveView(RetrieveAPIView):
     authentication_classes = (CsrfExemptSessionAuthentication, )
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class UnitSignedView(UpdateAPIView):
@@ -58,6 +73,7 @@ class UnitSignedView(UpdateAPIView):
     queryset = Unit.objects.all()
     serializer_class = UnitSignedSerializer
 
+
 @method_decorator(csrf_exempt, name='dispatch')
 class AnswerCreateView(CreateAPIView):
     """
@@ -66,6 +82,7 @@ class AnswerCreateView(CreateAPIView):
     authentication_classes = (CsrfExemptSessionAuthentication, )
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class PeerReviewCreateView(CreateAPIView):
