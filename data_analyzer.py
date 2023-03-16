@@ -19,7 +19,7 @@ if True:
 # 	new_row = ""
 # 	for char in row:
 # 		new_row += char * k
-# 	ans += (new_row + "\n" * k)
+# 	ans += (new_row + "\n") * k
 
 # print(ans[:-1])
 #
@@ -48,5 +48,3 @@ for answer in Answer.objects.all():
 
     pretest_data[answer.unit.key] = {
         "score": score, "time_spent": answer.time_spent}
-
-print(pretest_data)
