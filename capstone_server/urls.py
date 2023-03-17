@@ -30,7 +30,7 @@ urlpatterns = [
          name="question_list"),
     path('question/<int:pk>/', csrf_exempt(views.QuestionRetrieveView.as_view()),
          name="question_retrieve"),
-     path('feedbacks/', csrf_exempt(views.FeedbackListView.as_view()),
+     path('feedback-list/', csrf_exempt(views.FeedbackListView.as_view()),
          name="feedback_retrieve"),
     path('feedback/<int:question>/', csrf_exempt(views.FeedbackRetrieveView.as_view()),
          name="feedback_retrieve"),
