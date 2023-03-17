@@ -23,15 +23,9 @@ class UnitMissingCountListSerializer(serializers.ModelSerializer):
 
 
 class FeedbackListSerializer(serializers.ModelSerializer):
-    questions = serializers.SerializerMethodField()
-
     class Meta:
         model = Feedback
-        fields = ['questions']
-
-    def get_questions(self, obj):
-        return Feedback.objects.all().values_list('question')
-
+        fields = ['question']
 
 class QuestionListSerializer(serializers.ModelSerializer):
     class Meta:

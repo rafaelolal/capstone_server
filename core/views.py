@@ -16,6 +16,16 @@ class UnitMIssingCountListView(ListAPIView):
     queryset = Unit.objects.all()
     serializer_class = UnitMissingCountListSerializer
 
+@method_decorator(csrf_exempt, name='dispatch')
+class FeedbackListView(ListAPIView):
+    """
+    Retrieves all Feedbacks
+    """
+    authentication_classes = (CsrfExemptSessionAuthentication, )
+
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackListSerializer
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class QuestionListView(ListAPIView):
@@ -32,16 +42,6 @@ class QuestionListView(ListAPIView):
         if 'control' in self.kwargs:
             return queryset.exclude(type='Experiment')
         return queryset
-
-@method_decorator(csrf_exempt, name='dispatch')
-class FeedbackListView(ListAPIView):
-    """
-    Retrieves all Feedbacks
-    """
-    authentication_classes = (CsrfExemptSessionAuthentication, )
-
-    queryset = Feedback.objects.all()
-    serializer_class = FeedbackListSerializer
 
 @method_decorator(csrf_exempt, name='dispatch')
 class QuestionRetrieveView(RetrieveAPIView):

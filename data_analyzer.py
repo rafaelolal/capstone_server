@@ -12,16 +12,19 @@ if True:
     from core.models import Answer
 
 # solution
-# m, n, k = map(int, input().split())
+# M, N, K = map(int, input().split())
+
 # ans = ""
-# for _ in range(m):
-# 	row = input()
-# 	new_row = ""
-# 	for char in row:
-# 		new_row += char * k
-# 	ans += (new_row + "\n") * k
+# for _ in range(M):
+#     row = input()
+#     new_row = ""
+#     for char in row:
+#         new_row += char * K
+
+#     ans += (new_row + "\n") * K
 
 # print(ans[:-1])
+
 #
 
 # requirements
