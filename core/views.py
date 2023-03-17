@@ -1,5 +1,5 @@
 from rest_framework.generics import RetrieveAPIView, ListAPIView, CreateAPIView, UpdateAPIView
-from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, UnitSignedSerializer, AnswerSerializer, PeerReviewSerializer, UnitAnswersListSerializer, FeedbackSerializer
+from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, UnitSignedSerializer, AnswerSerializer, PeerReviewSerializer, UnitMissingCountListSerializer, FeedbackSerializer
 from .models import Unit, Question, Answer, PeerReview, Feedback
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -7,14 +7,14 @@ from .authentications import CsrfExemptSessionAuthentication
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class UnitAnswerListView(ListAPIView):
+class UnitMIssingCountListView(ListAPIView):
     """
     Retrieves all Units, their classroom, and answers
     """
     authentication_classes = (CsrfExemptSessionAuthentication, )
 
     queryset = Unit.objects.all()
-    serializer_class = UnitAnswersListSerializer
+    serializer_class = UnitMissingCountListSerializer
 
 
 @method_decorator(csrf_exempt, name='dispatch')

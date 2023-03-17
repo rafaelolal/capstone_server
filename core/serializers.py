@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Unit, Question, Answer, Feedback, PeerReview
 
 
-class UnitAnswersListSerializer(serializers.ModelSerializer):
+class UnitMissingCountListSerializer(serializers.ModelSerializer):
     classroom = serializers.SerializerMethodField()
     missing = serializers.SerializerMethodField()
 
