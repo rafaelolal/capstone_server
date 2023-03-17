@@ -23,7 +23,7 @@ class UnitMissingCountListSerializer(serializers.ModelSerializer):
 
 
 class FeedbackListSerializer(serializers.ModelSerializer):
-    questions = serializer.SerializerMethodField()
+    questions = serializers.SerializerMethodField()
 
     class Meta:
         model = Feedback
