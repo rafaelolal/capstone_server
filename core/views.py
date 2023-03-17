@@ -1,5 +1,5 @@
 from rest_framework.generics import RetrieveAPIView, ListAPIView, CreateAPIView, UpdateAPIView
-from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, UnitSignedSerializer, AnswerSerializer, PeerReviewSerializer, UnitMissingCountListSerializer, FeedbackSerializer
+from .serializers import QuestionListSerializer, QuestionSerializer, UnitSerializer, UnitSignedSerializer, AnswerSerializer, PeerReviewSerializer, UnitMissingCountListSerializer, FeedbackSerializer, FeedbackListSerializer
 from .models import Unit, Question, Answer, PeerReview, Feedback
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -33,6 +33,15 @@ class QuestionListView(ListAPIView):
             return queryset.exclude(type='Experiment')
         return queryset
 
+@method_decorator(csrf_exempt, name='dispatch')
+class FeedbackListView(ListAPIView):
+    """
+    Retrieves all Feedbacks
+    """
+    authentication_classes = (CsrfExemptSessionAuthentication, )
+
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackListSerializer
 
 @method_decorator(csrf_exempt, name='dispatch')
 class QuestionRetrieveView(RetrieveAPIView):
