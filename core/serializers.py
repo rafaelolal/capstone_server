@@ -4,19 +4,22 @@ from .models import Unit, Question, Answer, Feedback, PeerReview
 
 class UnitAnswersListSerializer(serializers.ModelSerializer):
     classroom = serializers.SerializerMethodField()
-    answers = serializers.SerializerMethodField()
+    missing = serializers.SerializerMethodField()
 
     class Meta:
         model = Unit
-        fields = ['key', 'classroom', 'answers']
+        fields = ['key', 'classroom', 'missing']
 
     def get_classroom(self, obj):
         if (obj.classroom):
             return obj.classroom.period
         return None
 
-    def get_answers(self, obj):
-        return len(obj.answers.all())
+    def get_missing(self, obj):
+        total_questions = Question.objects.count()
+        if obj.type == 'Experimental':
+            return total_questions - obj.answers.count()
+        return 2 - obj.answers.count()
 
 
 class QuestionListSerializer(serializers.ModelSerializer):
