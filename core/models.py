@@ -54,7 +54,7 @@ class Answer(models.Model):
 
 
 class Feedback(models.Model):
-    question = models.ForeignKey(
+    question = models.OneToOneField(
         Question, related_name="feedback", on_delete=models.CASCADE)
     description = TextField(max_length=16384)
 

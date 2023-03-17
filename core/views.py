@@ -52,7 +52,7 @@ class FeedbackRetrieveView(RetrieveAPIView):
     authentication_classes = (CsrfExemptSessionAuthentication, )
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
-
+    lookup_field = 'question'
 
 @method_decorator(csrf_exempt, name='dispatch')
 class UnitRetrieveView(RetrieveAPIView):

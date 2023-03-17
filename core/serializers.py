@@ -36,7 +36,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Feedback
-        fields = ['description', 'title']
+        fields = ['description', 'title', 'question']
 
     def get_title(self, obj):
         return obj.question.title
