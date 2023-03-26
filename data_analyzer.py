@@ -86,7 +86,7 @@ def get_pretest_data():
         except Exception as e:
             pass
 
-        pretest_data[answer.unit.key] = {
+        pretest_data[answer.unit.key] = {'type': answer.unit.type,
             "score": score, "time_spent": answer.time_spent}
 
     return pretest_data
@@ -105,12 +105,11 @@ posttest_output = "4"
 # at least one int function
 # at least one for loop
 # at least one comparison operator
-# at least one if statement
 # error free
 # correct answer
 def get_posttest_data():
-    requirements = 8
-    pretest_data = {}
+    requirements = 7
+    posttest_data = {}
     for answer in Answer.objects.all().filter(question=6):
         if answer.unit.key in ["9999"]:
             continue
@@ -128,9 +127,6 @@ def get_posttest_data():
         if any([comparator in answer.content for comparator in ["<", ">", "<=", ">="]]):
             score += 100/requirements
 
-        if answer.content.count("if") >= 1:
-            score += 100/requirements
-
         if answer.content.count("print(") == 1:
             score += 100/requirements
 
@@ -144,10 +140,10 @@ def get_posttest_data():
         except Exception as e:
             pass
 
-        pretest_data[answer.unit.key] = {
+        posttest_data[answer.unit.key] = {'type': answer.unit.type,
             "score": score, "time_spent": answer.time_spent}
 
-    return pretest_data
+    return posttest_data
 
 def execute_code(code, inp):
     my_functions = MyFunctions()
@@ -175,5 +171,7 @@ def format_code(code):
     code = "\n".join(new_lines)
     return code
 
-print(get_pretest_data())
-print(get_posttest_data())
+pre_data = get_pretest_data()
+post_data = get_posttest_data()
+print(pre_data)
+print(post_data)
