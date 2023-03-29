@@ -15,7 +15,7 @@ class MyFunctions:
     def __init__(self):
         self.output = []
 
-    def my_prnt(self, line):
+    def my_prnt(self, line="", *args, **kwargs):
         self.output.append(str(line).strip("\n "))
 
     def my_input(self, *args, **kwargs):
@@ -104,13 +104,19 @@ def get_pretest_data():
 
         try:
             output = execute_code(code, pretest_inp)
+        except Exception as e:
+            print("---------------------------")
+            print(answer)
+            print("--")
+            print(code)
+            print("--")
+            print(e)
+        else:
             score += 100/requirements
-
             if output == pretest_answer:
                 score += 100/requirements
+            
 
-        except Exception as e:
-            pass
 
         pretest_data[answer.unit.key] = {'type': answer.unit.type,
             "score": score, "time_spent": answer.time_spent}
@@ -144,13 +150,12 @@ def get_posttest_data():
 
         try:
             output = execute_code(code, posttest_inp)
-            score += 100/requirements
-
-            if output == posttest_output:
-                score += 100/requirements
-
         except Exception as e:
             pass
+        else:
+            score += 100/requirements
+            if output == posttest_output:
+                score += 100/requirements
 
         posttest_data[answer.unit.key] = {'type': answer.unit.type,
             "score": score, "time_spent": answer.time_spent}
@@ -158,11 +163,6 @@ def get_posttest_data():
     return posttest_data
 
 def format_code(code):
-    code = code.replace("print(", "my_functions.my_prnt(")
-    code = code.replace("input(", "my_functions.my_input(")
-    code = code.replace("int(", "my_functions.my_int(")
-    code = code.replace("int,", "my_functions.my_int,")
-
     lines = code.split("\n")
     new_lines = []
     for line in lines:
@@ -171,17 +171,23 @@ def format_code(code):
             continue
         new_lines.append(new_line)
     code = "\n".join(new_lines)
+
+    code = code.replace("print(", "my_functions.my_prnt(")
+    code = code.replace("input(", "my_functions.my_input(")
+    code = code.replace("int(", "my_functions.my_int(")
+    code = code.replace("int,", "my_functions.my_int,")
+
     return code
 
 def execute_code(code, inp):
     my_functions = MyFunctions()
-    
+
     with open("test_file.txt", "w") as file:
         file.write(inp)
     
     with open("test_file.txt", "r") as file:
         sys.stdin = file
-        exec(code)
+        exec(code, {'my_functions': my_functions})
     
     return my_functions.get_output()
 
