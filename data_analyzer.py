@@ -1,7 +1,6 @@
-import random
-import datetime
 import sys
-# if I do not do it like this, my auto formatter changes
+
+# if not done like this, auto formatter changes
 # the order of the lines, which matters
 if True:
     import os
@@ -29,17 +28,14 @@ class MyFunctions:
 
 excluded = list(map(lambda x: x.strip('\r\n '), open('exclude.txt', 'r').readlines()))
 
-pretest_answers = [answer for answer in Answer.objects.all().filter(question=1) if str(answer) not in excluded]
-posttest_answers = [answer for answer in Answer.objects.all().filter(question=6) if str(answer) not in excluded]
-
-pretest_inp = """5 4 2
+pretest_input = """5 4 2
 XXX.
 X..X
 XXX.
 X..X
 XXX."""
 
-pretest_answer = """XXXXXX..
+pretest_output = """XXXXXX..
 XXXXXX..
 XX....XX
 XX....XX
@@ -50,7 +46,7 @@ XX....XX
 XXXXXX..
 XXXXXX.."""
 
-posttest_inp = """5 3
+posttest_input = """5 3
 1
 6
 4
@@ -78,45 +74,44 @@ posttest_output = "4"
 # at least one comparison operator
 
 def get_pretest_data():
+    pretest_answers = [answer for answer in Answer.objects.all().filter(question=1) if str(answer) not in excluded]
     requirements = 7
     pretest_data = {}
     for answer in pretest_answers:
-        if answer.unit.key in ['5243', '1041', '9999']:
+        # 9999 is test unit
+        # 5243 uses sys.argv, which breaks this program
+        # they did not complete both tests either way...
+        if answer.unit.key in ['5243', '9999']:
             continue
 
         code = format_code(answer.content)
         score = 0
 
-        if code.count("my_input(") == 2:
+        if code.count("my_input") == 2:
+            score += 100/requirements
+
+        if code.count("my_prnt") == 1:
             score += 100/requirements
 
         if code.count("for ") >= 1:
             score += 100/requirements
 
-        if code.count("my_prnt(") == 1:
+        if code.count("my_int") >= 1 or code.count("my_int,") >= 1:
             score += 100/requirements
 
         if code.count("+") >= 1:
             score += 100/requirements
 
-        if code.count("my_int(") >= 1 or code.count("my_int,") >= 1:
-            score += 100/requirements
-
         try:
-            output = execute_code(code, pretest_inp)
+            output = execute_code(code, pretest_input)
+
         except Exception as e:
-            print("---------------------------")
-            print(answer)
-            print("--")
-            print(code)
-            print("--")
-            print(e)
+            pass
+
         else:
             score += 100/requirements
-            if output == pretest_answer:
+            if output == pretest_output:
                 score += 100/requirements
-            
-
 
         pretest_data[answer.unit.key] = {'type': answer.unit.type,
             "score": score, "time_spent": answer.time_spent}
@@ -124,6 +119,7 @@ def get_pretest_data():
     return pretest_data
 
 def get_posttest_data():
+    posttest_answers = [answer for answer in Answer.objects.all().filter(question=6) if str(answer) not in excluded]
     requirements = 7
     posttest_data = {}
     for answer in posttest_answers:
@@ -133,10 +129,13 @@ def get_posttest_data():
         code = format_code(answer.content)
 
         score = 0
-        if code.count("my_input(") == 2:
+        if code.count("my_input") == 2:
             score += 100/requirements
 
-        if code.count("my_int(") >= 2 or code.count("my_int,") >= 2:
+        if code.count("my_prnt") == 1:
+            score += 100/requirements
+
+        if code.count("my_int") >= 2 or code.count("my_int,") >= 2:
             score += 100/requirements
 
         if code.count("for ") >= 1:
@@ -145,13 +144,12 @@ def get_posttest_data():
         if any([comparator in code for comparator in ["<", ">", "<=", ">="]]):
             score += 100/requirements
 
-        if code.count("my_prnt(") == 1:
-            score += 100/requirements
-
         try:
-            output = execute_code(code, posttest_inp)
+            output = execute_code(code, posttest_input)
+
         except Exception as e:
             pass
+
         else:
             score += 100/requirements
             if output == posttest_output:
@@ -172,9 +170,9 @@ def format_code(code):
         new_lines.append(new_line)
     code = "\n".join(new_lines)
 
-    code = code.replace("print(", "my_functions.my_prnt(")
-    code = code.replace("input(", "my_functions.my_input(")
-    code = code.replace("int(", "my_functions.my_int(")
+    code = code.replace("print", "my_functions.my_prnt")
+    code = code.replace("input", "my_functions.my_input")
+    code = code.replace("int", "my_functions.my_int")
     code = code.replace("int,", "my_functions.my_int,")
 
     return code
@@ -188,7 +186,6 @@ def execute_code(code, inp):
     with open("test_file.txt", "r") as file:
         sys.stdin = file
         exec(code, {'my_functions': my_functions})
-    
     return my_functions.get_output()
 
 pre_data = get_pretest_data()
