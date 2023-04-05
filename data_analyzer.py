@@ -7,8 +7,8 @@ if True:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "capstone_server.settings")
     from django import setup
     setup()
-    from django.utils import timezone
     from core.models import Answer
+
 
 class MyFunctions:
     def __init__(self):
@@ -26,7 +26,9 @@ class MyFunctions:
     def get_output(self):
         return "\n".join(self.output).strip("\n ")
 
-excluded = list(map(lambda x: x.strip('\r\n '), open('exclude.txt', 'r').readlines()))
+
+excluded = list(map(lambda x: x.strip('\r\n '),
+                open('exclude.txt', 'r').readlines()))
 
 pretest_input = """5 4 2
 XXX.
@@ -73,8 +75,10 @@ posttest_output = "4"
 # correct answer
 # at least one comparison operator
 
+
 def get_pretest_data():
-    pretest_answers = [answer for answer in Answer.objects.all().filter(question=1) if str(answer) not in excluded]
+    pretest_answers = [answer for answer in Answer.objects.all().filter(
+        question=1) if str(answer) not in excluded]
     requirements = 7
     pretest_data = {}
     for answer in pretest_answers:
@@ -114,12 +118,14 @@ def get_pretest_data():
                 score += 100/requirements
 
         pretest_data[answer.unit.key] = {'type': answer.unit.type,
-            "score": score, "time_spent": answer.time_spent}
+                                         "score": score, "time_spent": answer.time_spent}
 
     return pretest_data
 
+
 def get_posttest_data():
-    posttest_answers = [answer for answer in Answer.objects.all().filter(question=6) if str(answer) not in excluded]
+    posttest_answers = [answer for answer in Answer.objects.all().filter(
+        question=6) if str(answer) not in excluded]
     requirements = 7
     posttest_data = {}
     for answer in posttest_answers:
@@ -156,9 +162,16 @@ def get_posttest_data():
                 score += 100/requirements
 
         posttest_data[answer.unit.key] = {'type': answer.unit.type,
-            "score": score, "time_spent": answer.time_spent}
+                                          "score": score, "time_spent": answer.time_spent}
 
     return posttest_data
+
+
+def get_excluded_data():
+    excluded_data = [answer for answer in Answer.objects.all()
+                     if str(answer) in set(excluded)]
+    return "\n".join(set([f"{answer}*{answer.time_spent}*{len(answer.content)}" for answer in set(excluded_data)]))
+
 
 def format_code(code):
     lines = code.split("\n")
@@ -177,18 +190,21 @@ def format_code(code):
 
     return code
 
+
 def execute_code(code, inp):
     my_functions = MyFunctions()
 
     with open("test_file.txt", "w") as file:
         file.write(inp)
-    
+
     with open("test_file.txt", "r") as file:
         sys.stdin = file
         exec(code, {'my_functions': my_functions})
     return my_functions.get_output()
 
-pre_data = get_pretest_data()
-post_data = get_posttest_data()
-print(pre_data)
-print(post_data)
+
+# pre_data = get_pretest_data()
+# post_data = get_posttest_data()
+# print(pre_data)
+# print(post_data)
+print(get_excluded_data())

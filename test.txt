@@ -1,0 +1,12 @@
+SQRT((1/(13-2))*
+    SUM(
+        (
+            post_control[Score]-0.802*pre_control[Score]
+        )^2
+    )/
+    SUM(
+        (
+            pre_control[Score]-AVERAGE(pre_control[Score])
+        )^2
+    )
+)
